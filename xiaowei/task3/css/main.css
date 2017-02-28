@@ -1,0 +1,23 @@
+/*全局*/
+div{padding:20px;border:1px solid #999;box-sizing:border-box;}
+img{height:80px;width:80px;}
+.container{width:100%;background-color:#eee;}
+/*全局*/
+
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+
+/*left*/
+div.left{width:200px;float:left;position:relative;margin:0 -200px 0 0;}
+.left span{float:right;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;max-width:60px;}
+/*left*/
+
+/*right*/
+div.right{width:120px;float:right;position:relative;margin: 0 0 0 -120px;}
+.right img{margin-top:20px;}
+.right img:first-child{margin-top:0px;}
+/*right*/
+
+/*main*/
+div.main{float:left;width:100%;border:0px;padding-top:0px;}
+div.mainCon{margin:0 120px 0 200px;}
+/*main*/
