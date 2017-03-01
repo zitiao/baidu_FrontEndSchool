@@ -1,0 +1,28 @@
+.mnSquare {
+  width: 400px;
+  height: 200px;
+  background-color: #ccc;
+  position:absolute;
+  top:50%;
+  left:50%;
+  /* 两种方式，用margin和transform */
+  transform:translate(-50%,-50%);
+/*margin:-100px 0 0 -200px; */
+}
+
+.quarterCircle_Right {
+  width: 50px;
+  height: 50px;
+  background-color: yellow;
+  border-radius: 50px 0 0 0;
+  position:absolute;
+  bottom:0;
+  right:0;
+}
+
+.quarterCircle_Left{
+  width: 50px;
+  height: 50px;
+  background-color: yellow;
+  border-radius: 0 0 50px 0;  
+}
