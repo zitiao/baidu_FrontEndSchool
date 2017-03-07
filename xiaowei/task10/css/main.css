@@ -1,0 +1,10 @@
+div{padding:20px;}
+.flexContainer{display:flex;justify-content:space-between;align-items:center;}
+
+.flexContainer div{width:150px;border:1px solid #f00;box-sizing:border-box;margin-bottom:20px;}
+div.blue{border-color:#0f0;}
+
+@media screen and (max-width:640px) {
+  .flexContainer{flex-wrap:wrap;flex-direction:row;align-items:flex-start;align-content:space-around;}
+  .blue{order:-1;}
+}
