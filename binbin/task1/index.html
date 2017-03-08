@@ -18,9 +18,9 @@
 		  */
 		  document.getElementById("button").addEventListener("click",showValue);
 		  function showValue(){
-		  	var result = document.getElementById("aqi-input").value;
-		  	if(result){
-		  		document.getElementById("aqi-display").innerText = result;	
+		  	var text = document.getElementById("aqi-input").value;
+		  	if(text){
+		  		document.getElementById("aqi-display").innerText = text;	
 		  	}else{
 		  		alert("You haven`t input anything.");
 		  	}
