@@ -4,28 +4,26 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 	<title></title>
 	<style type="text/css">
-		div	{display: flex;align-items: flex-end;flex-wrap: wrap;}
-		span{display:block;width: 50px;background-color: red;margin: 10px;text-align: center;}
+		span{display: inline-block;height: 50px;width: 50px;background-color: red;margin: 10px;line-height: 50px;text-align: center;}
+		b{color: white;}
 	</style>
 </head>
 <body>
-	<input type="text" name="" id="num" />
+	<textarea id="num"></textarea>
 	<input type="button" name="" value="左侧入" id="zcr">
 	<input type="button" name="" value="右侧入" id="ycr">
 	<input type="button" name="" value="左侧出" id="zcc">
 	<input type="button" name="" value="右侧出" id="ycc">
-	<input type="button" name="" value="排序" id="px">
 	<div id="show">
 	</div>
-
+	<input type="text" name="" id="search" />
+	<input type="button" name="" id="searchBtn" value="搜索">
 	<script type="text/javascript">
 		(function (){
 			var initNumbers = [10,3,7,12,11,30];
-			perHeight = 5;
 
 			var show = document.getElementById('show');
 			for(var i=0;i<initNumbers.length;i++){
-				
 				var span = createSpan(initNumbers[i]);
 				show.appendChild(span);
 			}
@@ -34,36 +32,67 @@
 			document.getElementById("ycr").addEventListener("click",ycr);
 			document.getElementById("zcc").addEventListener("click",zcc);
 			document.getElementById("ycc").addEventListener("click",ycc);
-			document.getElementById("px").addEventListener("click",px);
+			document.getElementById("searchBtn").addEventListener("click",search);
 		}())
+
+		function strSplit(str){
+			var result = str.split(/[,，、\t\n\r\s]/);
+			return result;
+		}
+
+		function search(){
+			var seaPattern = document.getElementById("search").value;
+			var seaArr = getArray();
+			var spanList = document.getElementById('show').children;
+			for(var i=0;i<seaArr.length;i++){
+				var seaStr = seaArr[i];
+				var replaceArr = "<b>" + seaPattern + "</b>";
+				var result = seaStr.replace(seaPattern,replaceArr);
+				spanList[i].innerHTML = result;
+			}
+		}
+
 
 		function createSpan(num){
 			var span = document.createElement("span");
 			span.innerText = num;
-			span.style.height = (num * perHeight) + "px";
-			return span;
+			return span;	
+		}
+
+		function getArray(){
+			var show = document.getElementById('show');
+			var result = [];
+			for(var i=0;i<show.children.length;i++){
+				result.push(show.children[i].innerText);
+			}
+			return result;
 		}
 
 		function zcr(){
 			var num = document.getElementById("num").value;
-			var show = document.getElementById('show');
-			if(!(num=="" || num<10 || num>100 || show.children.length>=60)){
-				var span = createSpan(num);				
-				show.insertBefore(span,show.children[0]);
+			if(!(num==undefined || num == null || num=="")){
+				var strArr = strSplit(num);
+				for(var i=0;i<strArr.length;i++){
+					var span = createSpan(strArr[i]);	
+					show.insertBefore(span,show.children[0]);
+				}								
 			}else{
-				alert("number invalid.The number must between 10 and 100")
+				alert("no input number")
 			}
 			
 		}
 
 		function ycr(){
-			var show = document.getElementById('show');
 			var num = document.getElementById("num").value;
-			if(!(num=="" || num<10 || num>100 || show.children.length>=60)){
-				var span = createSpan(num);					
-				show.appendChild(span,show.children[0]);
+			if(!(num==undefined || num == null || num=="")){
+				var strArr = strSplit(num);
+				for(var i=0;i<strArr.length;i++){
+					var span = createSpan(strArr[i]);	
+					show.appendChild(span,show.children[0]);
+				}	
+				
 			}else{
-				alert("number invalid.The number must between 10 and 100")
+				alert("no input number")
 			}
 			
 		}
@@ -92,43 +121,6 @@
 			}
 			
 		}
-
-		function getNumbers(){
-			var show = document.getElementById('show');
-			var numbers = [];
-			for(var i=0;i<show.children.length;i++){
-				numbers.push(parseInt(show.children[i].innerText));
-			}
-			return numbers;
-		}
-
-		function findIndex(num){
-			var show = document.getElementById('show');
-			for(var i=0;i<show.children.length;i++){
-				if(show.children[i].innerText == num){
-					return i;
-				}
-			}
-		}
-
-		//冒泡排序
-		function px(){
-			var spanList = document.getElementById('show').children;
-			var arr = getNumbers();
-			for(var i=arr.length;i>1;i--){
-				for(var j=0;j<i-1;j++){
-					if(arr[j]>arr[j+1]){
-						var firstIndex = findIndex(arr[j]);
-						show.insertBefore(spanList[firstIndex+1],spanList[firstIndex]);	
-						temp = arr[j+1];
-						arr[j+1] = arr[j]
-						arr[j] = temp;
-					}
-				}
-			}
-
-		}
-
 	</script>
 </body>
 </html>
