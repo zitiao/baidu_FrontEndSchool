@@ -1,0 +1,12 @@
+p{display: none;}
+input:focus + p{display: block;}
+
+input.success{border:1px solid green;box-shadow: 0 0  5px green;}
+input.failed{border:1px solid red;box-shadow: 0 0  5px red;}
+p.success{color: green!important;display: block!important;}
+p.failed{color: red!important;display: block!important;}
+
+.inputGroup:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+.inputGroup{width: 300px;}
+.inputGroup label{float: left;width: 100px;text-align: right;}
+.inputGroup div{float: right;width: 180px;}
