@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		input.success{border:1px solid green;box-shadow: 0 0  5px green;}
+		input.failed{border:1px solid red;box-shadow: 0 0  5px red;}
+		div.success{color: green!important;}
+		div.failed{color: red!important;}
+		#alert{color: gray;}
+	</style>
+</head>
+<body>
+	<label for="nameInput">名称</label>
+	<input type="text" name="" id="nameInput"/>
+	<input type="button" name="" id="nameValid" value="验证">
+	<div id="alert">必填，长度为4~16个字符</div>
+	<script type="text/javascript">
+		document.getElementById('nameValid').addEventListener("click",validation);
+
+		function validation(){
+			var str = document.getElementById('nameInput').value;
+			var alert = document.getElementById('alert');
+			var strLength = 0;
+			for(var i=0;i<str.length;i++){
+				strCode = str.charCodeAt(i);
+				if(strCode>=0xFF || strCode<=0x00){
+					strLength+=2;
+				}else{
+					strLength+=1;
+				}
+			}
+			if (str.length==0) {
+				alert.innerText = "姓名不能为空"
+				alert.className="failed";
+				document.getElementById('nameInput').className = "failed";
+			}
+			else if(strLength < 4 || strLength > 16){
+				alert.innerText = "长度必须在4——16之间";
+				alert.className="failed";
+				document.getElementById('nameInput').className = "failed";
+			}else{
+				alert.innerText = "格式正确";
+				alert.className="success";
+				document.getElementById('nameInput').className = "success";
+			}
+		}
+	</script>
+</body>
+</html>
