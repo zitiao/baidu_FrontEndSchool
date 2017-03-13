@@ -1,0 +1,1 @@
+var school = '[{"area":"北京","school":["北京大学"]},{"area":"武汉","school":["武汉大学"]},{"area":"上海","school":["复旦大学"]},{"area":"苏州","school":["苏州大学"]}]';
