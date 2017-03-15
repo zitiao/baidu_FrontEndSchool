@@ -59,6 +59,9 @@
     			setTimeout(function() {
     				arr[i].className="turnBlue";
     			}, i * 1000);
+    			setTimeout(function() {
+    				arr[i].className="";
+    			}, i * 2000);
     		})(arr,i);
     	}
     }
