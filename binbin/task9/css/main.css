@@ -1,0 +1,12 @@
+#container{display: flex;justify-content: space-around;}
+div{padding: 20px;border: 1px solid #111;display: inline-block;cursor: pointer;box-sizing: content-box;}
+
+.turnBlue{animation:turnBlue 0.5s; animation-fill-mode: backwards;}
+@keyframes turnBlue{
+	from{background-color: white;}
+	to{background-color: blue;}
+}
+
+.choosen{
+	border: 2px solid red;
+}
