@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		#mainCanvas{position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);}
+	</style>
+</head>
+<body onload="init()">
+	<canvas id="mainCanvas" width="800px" height="600px"></canvas>
+	<!--<script src="three.js"></script>-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.min.js"></script>
+	<script type="text/javascript">
+	function init() {
+	    // renderer
+	    var renderer = new THREE.WebGLRenderer({
+	        canvas: document.getElementById('mainCanvas')
+	    });
+	    renderer.setClearColor(0x666666); 
+	    renderer.shadowMap.enabled = true;
+	    renderer.shadowMapSoft = true;
+
+	    //texture
+	 //    var texture = THREE.ImageUtils.loadTexture('http://www.ituring.com.cn/download/01YdRBbTLpi6', {}, function() {
+  //  	 		renderer.render(scene, camera);
+		// });
+		// var material = new THREE.MeshLambertMaterial({
+		//     map: texture
+		// });
+
+	    // scene
+	    var scene = new THREE.Scene();
+
+	    // camera
+	    var camera = new THREE.OrthographicCamera(-5, 5, 10, -10, 1, 200);
+	    // 
+		camera.position.set(-6,7,8);
+		camera.lookAt(new THREE.Vector3(0, 0, 0));
+		scene.add(camera);
+
+	    // a cube in the scene
+	    var materials = [];
+		for (var i = 0; i < 6; ++i) {
+		    materials.push(new THREE.MeshBasicMaterial({
+		        map: THREE.TextureLoader('image/' + i + '.png',
+		                {}, function() {
+		                    renderer.render(scene, camera);
+		                }),
+		        overdraw: true
+		    }));
+		}
+
+	    var cube = new THREE.Mesh(new THREE.CubeGeometry(3, 6, 6),
+			new THREE.MeshLambertMaterial(materials));
+		cube.position.set(0,3,0);
+		cube.castShadow = true;
+		scene.add(cube);
+		
+		//two TorusGeometrys
+		var torus1 = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.3, 12, 18),
+			new THREE.MeshLambertMaterial({
+				color:0xffffff
+				// wireframe: true
+			})
+		);
+		var torus2 = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.3, 12, 18),
+			new THREE.MeshLambertMaterial({
+				color:0xffffff
+				// wireframe: true
+			})
+		);
+		torus1.position.set(-1.4,0,-1.5);
+		torus2.position.set(-1.4,0,1.5);
+		torus1.rotation.y +=0.5*Math.PI;
+		torus2.rotation.y +=0.5*Math.PI;
+		scene.add(torus1);
+		scene.add(torus2);
+
+		//PlaneGeometry
+		var plane = new THREE.Mesh(new THREE.PlaneGeometry(20,20),
+			new THREE.MeshLambertMaterial({
+				color:0x2E8B57
+				// wireframe: true
+			})
+		);
+		// plane.position.set(0,-5,0);
+		plane.rotation.x = -Math.PI / 2;
+		plane.position.y = -1;
+		plane.receiveShadow = true;
+		scene.add(plane);
+
+		// light
+		// var light = new THREE.PointLight(0xffffff, 2, 100);
+		// light.position.set(-6,5,5);
+
+		// var light = new THREE.DirectionalLight(0xffffff, 2);
+		// light.position.set(-4,5,-0.5);
+		// light.castShadow = true;
+		
+
+		var light = new THREE.SpotLight(0xffffff, 2, 100, Math.PI / 4, 25);
+		light.position.set(-10,20,0);
+		light.target = cube;
+		light.castShadow = true;
+
+		scene.add(light);
+	    // render
+	    renderer.render(scene, camera);
+	}
+	</script>
+</body>
+</html>
