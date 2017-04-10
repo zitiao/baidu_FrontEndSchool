@@ -8,7 +8,7 @@
 </head>
 <body onload="init()">
 	<canvas id="mainCanvas" width="800px" height="600px"></canvas>
-	<!--<script src="three.js"></script>-->
+	<!-- <script src="three.js"></script> -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.min.js"></script>
 	<script type="text/javascript">
 	function init() {
@@ -19,14 +19,6 @@
 	    renderer.setClearColor(0x666666); 
 	    renderer.shadowMap.enabled = true;
 	    renderer.shadowMapSoft = true;
-
-	    //texture
-	 //    var texture = THREE.ImageUtils.loadTexture('http://www.ituring.com.cn/download/01YdRBbTLpi6', {}, function() {
-  //  	 		renderer.render(scene, camera);
-		// });
-		// var material = new THREE.MeshLambertMaterial({
-		//     map: texture
-		// });
 
 	    // scene
 	    var scene = new THREE.Scene();
@@ -39,32 +31,30 @@
 		scene.add(camera);
 
 	    // a cube in the scene
-	    var materials = [];
-		for (var i = 0; i < 6; ++i) {
-		    materials.push(new THREE.MeshBasicMaterial({
-		        map: THREE.TextureLoader('image/' + i + '.png',
-		                {}, function() {
-		                    renderer.render(scene, camera);
-		                }),
-		        overdraw: true
-		    }));
-		}
+	    var loader = new THREE.TextureLoader();
+		var material = new THREE.MeshBasicMaterial({
+	        map: loader.load( '1.jpg', function ( texture ) {
+	          // texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+	          // texture.repeat.set(4, 4);
+	          renderer.render( scene, camera );
+	        })
+      	});
 
 	    var cube = new THREE.Mesh(new THREE.CubeGeometry(3, 6, 6),
-			new THREE.MeshLambertMaterial(materials));
+			material);
 		cube.position.set(0,3,0);
 		cube.castShadow = true;
 		scene.add(cube);
 		
 		//two TorusGeometrys
 		var torus1 = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.3, 12, 18),
-			new THREE.MeshLambertMaterial({
+			new THREE.MeshPhongMaterial({
 				color:0xffffff
 				// wireframe: true
 			})
 		);
 		var torus2 = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.3, 12, 18),
-			new THREE.MeshLambertMaterial({
+			new THREE.MeshPhongMaterial({
 				color:0xffffff
 				// wireframe: true
 			})
