@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		/*#mainCanvas{position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);}*/
+		body {
+			color: #000;
+			font-family:Monospace;
+			font-size:13px;
+			text-align:center;
+			font-weight: bold;
+			background-color: #fff;
+			margin: 0px;
+			overflow: hidden;
+		}
+	</style>
+</head>
+<body>
+	<div id="container"></div>
+	<!-- <script src="three.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.min.js"></script>
+	<script src="TrackballControls.js"></script>
+	<script src="Detector.js"></script>
+	<script src="stats.js"></script>
+	<script type="text/javascript">
+		if(! Detector.webgl) Detector.addGetWebGLMessage();
+		var container, stats;
+		var camera, controls, scene, renderer;
+		var cross;
+		init();
+		animate();
+		function init(){
+			//camera
+			camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight,1 ,1000);
+			camera.position.set(-10,8,10);
+
+			//controls
+			controls = new THREE.TrackballControls(camera);
+			controls.rotateSpeed = 2.0;
+			controls.zoomSpeed = 1.2;
+			controls.panSpeed = 0.8;
+			controls.noZoom = false;
+			controls.noPan = false;
+			controls.staticMoving = true;
+			controls.dynamicDampingFactor = 0.3;
+			controls.keys = [ 65, 83, 68 ];
+			controls.addEventListener( 'change', render );
+
+			//scene
+			scene = new THREE.Scene();
+			scene.fog = new THREE.FogExp2( 0xcccccc, 0.002 );
+
+			// a cube in the scene
+		    var loader = new THREE.TextureLoader();
+			var material = new THREE.MeshBasicMaterial({
+		        map: loader.load( '1.jpg', function ( texture ) {	      
+		          renderer.render( scene, camera );
+		        })
+	      	});
+		    var cube = new THREE.Mesh(new THREE.CubeGeometry(3, 4, 6),
+				material);
+			cube.position.set(0,3,0);
+			cube.castShadow = true;
+			scene.add(cube);
+
+			//two TorusGeometrys
+			torus1 = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.3, 12, 18),
+				material);
+			 torus2 = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.3, 12, 18),
+				new THREE.MeshPhongMaterial({
+					color:0xffffff
+				})
+			);
+			 torus3 = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.3, 12, 18),
+				new THREE.MeshPhongMaterial({
+					color:0xffffff
+				})
+			);
+			 torus4 = new THREE.Mesh(new THREE.TorusGeometry(0.8, 0.3, 12, 18),
+				new THREE.MeshPhongMaterial({
+					color:0xffffff
+				})
+			);
+			torus1.position.set(-1.4,1,-1.5);
+			torus2.position.set(-1.4,1,1.5);
+			torus3.position.set(1.4,1,1.5);
+			torus4.position.set(1.4,1,-1.5);
+			torus1.rotation.y +=0.5*Math.PI;
+			torus2.rotation.y +=0.5*Math.PI;
+			torus3.rotation.y +=0.5*Math.PI;
+			torus4.rotation.y +=0.5*Math.PI;
+			scene.add(torus1);
+			scene.add(torus2);
+			scene.add(torus3);
+			scene.add(torus4);
+
+			//light
+			var light = new THREE.SpotLight(0xffffff, 2, 100, Math.PI / 4, 25);
+			light.position.set(-10,20,0);
+			light.target = cube;
+			light.castShadow = true;
+			scene.add(light);
+
+			//renderer
+			renderer = new THREE.WebGLRenderer( { antialias: false } );
+			renderer.setClearColor( scene.fog.color );
+			renderer.setPixelRatio( window.devicePixelRatio );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			container = document.getElementById( 'container' );
+			container.appendChild( renderer.domElement );
+			stats = new Stats();
+			container.appendChild( stats.dom );
+			window.addEventListener( 'resize', onWindowResize, false );
+			render();
+		}
+		function onWindowResize() {
+			camera.aspect = window.innerWidth / window.innerHeight;
+			camera.updateProjectionMatrix();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			controls.handleResize();
+			render();
+		}
+		function animate() {
+			requestAnimationFrame( animate );
+			controls.update();
+		}
+		function render() {
+			renderer.render( scene, camera );
+			torus1.rotation.x += 0.5;
+			torus2.rotation.x -= 0.5;
+			torus3.rotation.x += 0.5;
+			torus4.rotation.x -= 0.5;
+			stats.update();
+		}
+	</script>
+</body>
+</html>
