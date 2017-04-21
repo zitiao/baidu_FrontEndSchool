@@ -114,13 +114,28 @@
 			scene.add(torus3);
 			scene.add(torus4);
 
+			var plane = new THREE.Mesh(new THREE.PlaneGeometry(20,80),
+				new THREE.MeshLambertMaterial({
+					color:0x2E8B57
+				})
+			);
+			plane.position.set(0,0,-38);
+			plane.rotation.x = -Math.PI / 2;
+			plane.receiveShadow = true;
+			scene.add(plane);
+
 			//light
 			var light = new THREE.SpotLight(0xffffff, 2, 100, Math.PI / 4, 25);
 			light.position.set(-10,20,0);
 			light.target = cube;
 			light.castShadow = true;
 			scene.add(light);
-
+			
+			var light1 = new THREE.DirectionalLight(0xffffff, 0.5);
+			light1.position.set(0,100,0);
+			light1.target = plane;
+			light1.castShadow = true;
+			scene.add(light1);
 			//renderer
 			renderer = new THREE.WebGLRenderer( { antialias: false } );
 			renderer.setClearColor( scene.fog.color );
